@@ -1,0 +1,30 @@
+# Base de datos
+sqlalchemy==2.0.30
+psycopg2-binary==2.9.11
+alembic==1.13.1
+asyncpg==0.30.0
+
+# FastAPI y dependencias principales
+fastapi==0.112.1
+uvicorn==0.30.6
+python-dotenv==1.0.1
+pydantic==2.8.2
+pydantic-settings==2.11.0
+
+# Autenticación y seguridad
+pyjwt==2.10.1
+python-jose==3.3.0
+passlib==1.7.4
+bcrypt==4.0.1
+cryptography==46.0.3
+
+# Utilidades
+redis==7.0.0
+apscheduler==3.11.0
+async-timeout==4.0.3
+
+# Desarrollo (mover estas a requirements-dev.txt)
+black==23.12.0
+ruff==0.12.4
+isort==6.0.1
+pre-commit==4.2.0

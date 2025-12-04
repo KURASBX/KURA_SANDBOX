@@ -1,0 +1,17 @@
+# Scripts para correr migraciones:
+- alembic revision --autogenerate -m "Descripción del cambio"
+- alembic upgrade head
+
+# para levantar el codigo:
+opcion 1:
+- asegurarse de tener instalado python y postgresql
+- crear un archivo .env
+- pip install requirements.txt
+- crear la base de datos consistentemente con el archivo .env
+- alembic upgrade head
+- uvicorn main:app
+
+opcion 2:
+- asegurarse de tener instalado docker
+- crear un archivo .env
+- docker-compose up --build

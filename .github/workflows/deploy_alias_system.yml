@@ -1,0 +1,76 @@
+name: Deploy Alias System
+
+on:
+  push:
+    branches: [dev]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Create deployment package
+      run: |
+        echo "📦 Creando paquete de despliegue..."
+        mkdir -p deploy_package
+        
+        # Convertir TODOS los scripts shell a formato Unix
+        echo "🔧 Convirtiendo scripts a formato Unix..."
+        find . -name "*.sh" -exec sed -i 's/\r$//' {} \;
+        find . -name "*.py" -exec sed -i 's/\r$//' {} \; 2>/dev/null || true
+        
+        # Copiar directorios
+        cp -r alembic api core domain infrastructure application utils scripts deploy_package/
+        
+        # Copiar archivos individuales importantes
+        cp main.py requirements.txt docker-compose.yml Dockerfile entrypoint.sh deploy_package/
+        cp alembic.ini pyproject.toml deploy_package/ 2>/dev/null || true
+        
+        # Copiar alembic si existe
+        if [ -d "alembic" ]; then
+          cp -r alembic deploy_package/
+        fi
+        
+        # Limpiar archivos no necesarios
+        rm -rf deploy_package/.git
+        rm -rf deploy_package/.github
+        find deploy_package -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
+        find deploy_package -name "*.pyc" -delete
+        find deploy_package -name ".ruff_cache" -type d -exec rm -rf {} + 2>/dev/null || true
+        find deploy_package -name ".env*" -delete 2>/dev/null || true
+        
+        echo "✅ Paquete creado"
+        echo "📁 Contenido del paquete:"
+        ls -la deploy_package/
+        echo ""
+        echo "📄 Archivos copiados:"
+        find deploy_package -type f -name "*.py" -o -name "*.txt" -o -name "*.yml" -o -name "*.ini" -o -name "*.toml" -o -name "*.sh" | head -20
+
+    - name: Deploy files via FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.0
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USER }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ./deploy_package/
+        server-dir: /home/kura/
+        exclude: |
+          **/.git*
+          **/.github*
+          **/__pycache__
+          **/*.pyc
+          **/.env*
+          **/README.md
+          **/LICENSE
+          **/.ruff_cache
+        dangerous-clean-slate: false
+
+    - name: Verify deployment
+      run: |
+        echo "✅ Archivos desplegados via FTP"
+        echo "📍 Los archivos fueron subidos a: /kura/"
+        echo "🔧 Ahora necesitas ejecutar manualmente en el servidor:"
+        echo "   cd /kura && docker-compose up -d --build"

@@ -1,0 +1,14 @@
+# Commit para KURA
+
+# Ejemplos:
+- feat(api): [auth] agregar endpoint de login
+- fix(core): [validation] corregir validación de email
+- docs(docs): [architecture] actualizar instrucciones de instalación
+- chore(scripts): [build] actualizar script de construcción
+
+<tipo>(<componente>): [<ámbito>] <descripción>
+
+# COMPONENTES: godot, fastapi, nakama, web, launcher, docker, docs
+# TIPOS: feat, fix, refactor, docs, assets, config, ci
+
+# Descripción en IMPERATIVO (máx 100 chars)

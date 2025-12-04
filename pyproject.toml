@@ -1,0 +1,37 @@
+[tool.isort]
+profile = "black"
+lines_after_imports = 1
+known_first_party = ["models", "schemas", "services", "controllers"]  # Mis módulos
+
+[tool.bandit]
+exclude_dirs = ["migrations", "tests"]
+skips = ["B101"]
+
+[tool.ruff]
+line-length = 88
+
+[tool.mypy]
+strict = true
+disallow_untyped_defs = true
+ignore_missing_imports = true
+exclude = "migrations|tests|__pycache__"
+
+[tool.ruff.lint]
+select = [
+    "E",   # Pycodestyle errors (estilo)
+    "F",   # Pyflakes (errores sintácticos)
+    "I",   # isort (orden de imports)
+    "B",   # Bugbear (detección de bugs)
+    "UP",  # pyupgrade (actualiza sintaxis a Python moderno)
+    "C4",  # Flake8 comprehensions (mejores list/dict comprehensions)
+    "EM",  # Flake8-error-message (mensajes de error claros)
+    "RET", # return-check (mejores prácticas en returns)
+    "ASYNC", # Async checks (mejores prácticas en código asíncrono)
+]
+ignore = [
+    "E501",  # Black ya maneja el largo de línea
+    "B008"
+    ]
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["Depends"]

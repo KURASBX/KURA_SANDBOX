@@ -1,0 +1,14 @@
+repos:
+  # Hooks para FastAPI (Python)
+  - repo: https://github.com/psf/black
+    rev: 23.12.0
+    hooks:
+      - id: black
+        files: ^/
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.12.4
+    hooks:
+      - id: ruff
+        files: ^/
+        args: ["--fix"]
