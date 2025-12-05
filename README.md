@@ -1,5 +1,5 @@
 ﻿---
-title: "KURA Sandbox – Backend de Validación de Alias"
+KURA Sandbox – Backend de Validación de Alias
 project: "KURA – Sistema Interoperable de Alias"
 version: 1.0
 date: 2025-12-05
