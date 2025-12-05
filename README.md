@@ -4,8 +4,10 @@
 ---
 version: 1.0
 ---
-date: 2025-12-05
-author: Alias Chile SpA · Área Técnica
+Date: 2025-12-05
+---
+Author: Alias Chile SpA · Área Técnica
+---
 status: Interno / Distribución Controlada
 ---
 
